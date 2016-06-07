@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bocarija Opatija</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var directionsRenderer;
+      var directionsService;
+      var map;
+
+      var bocarija;
+      var verona;
+      var sydney;
+
+      function initMap() {
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsService = new google.maps.DirectionsService();
+
+        map = new google.maps.Map(document.getElementById('map'), {});
+
+        directionsRenderer.setMap(map);
+
+        bocarija = new google.maps.LatLng(45.33665, 14.3067);
+        sydney = new google.maps.LatLng(-34.397, 150.644);
+        verona = new google.maps.LatLng(45.4395537, 10.4966121);
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function(position) {
+              handleLocation(new google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude));
+            },
+            function() {
+              handleLocation(verona);
+            });
+        } else {
+          handleLocation(verona);
+        }
+      }
+
+      function handleLocation(start) {
+        var routeRequest = {
+          origin: start,
+          destination: bocarija,
+          travelMode: google.maps.TravelMode.DRIVING,
+        }
+
+        directionsService.route(routeRequest, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(result);
+          } else {
+            new google.maps.Marker({
+              map: map,
+              label: 'A',
+              position: start,
+            });
+            new google.maps.Marker({
+              map: map,
+              label: 'B',
+              position: bocarija,
+            });
+            new google.maps.Polyline({
+              path: [start, bocarija],
+              geodesic: true,
+              map: map,
+              strokeColor: '#000088',
+              strokeOpacity: 1.0,
+              strokeWeight: 2
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(start);
+            bounds.extend(bocarija);
+            map.fitBounds(bounds);
+          }
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE69UKovoclC8pvw5u8RngBFMMBSTAGvA&callback=initMap"
+    async defer></script>
+  </body>
+</html>
