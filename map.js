@@ -88,12 +88,12 @@ require([
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      position => handleLocation({x: position.coords.longitude, y: position.coords.latitude}, view),
+      position => handleLocation({x: position.coords.longitude, y: position.coords.latitude}),
       positionError => {
         console.warn(positionError);
-        handleLocation(VERONA, view);
+        handleLocation(VERONA);
       });
   } else {
-    handleLocation(VERONA, view);
+    handleLocation(VERONA);
   }
 });
