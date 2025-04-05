@@ -17,18 +17,36 @@
     <style>
       html,
       body,
-      #viewDiv {
+      arcgis-map {
         padding: 0;
         margin: 0;
         height: 100%;
         width: 100%;
       }
     </style>
-    <link rel='stylesheet' href='https://js.arcgis.com/4.24/esri/themes/light/main.css'>
-    <script src='https://js.arcgis.com/4.24/'></script>
-    <script src='map.js'></script>
+
+    <!-- The esriConfig variable must be defined before adding the other esri libraries -->
+    <script>
+      var esriConfig = {
+        apiKey: 'AAPKf113e9ff665146a8ac310d02425079b5-VgHtA308WZA3u9LT_mOBj72gQqcg7dqM3f_YoREHOVcqEgSNb-clK-VjQuIJAjr'
+      };
+    </script>
+
+    <!-- Load Calcite -->
+    <script type='module' src='https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js'></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
+    <link rel='stylesheet' href='https://js.arcgis.com/4.32/esri/themes/light/main.css'>
+    <script src='https://js.arcgis.com/4.32/'></script>
+
+    <!-- Load map components -->
+    <script type='module' src='https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js'></script>
+
   </head>
   <body>
-    <div id='viewDiv'></div>
+    <arcgis-map basemap='arcgis/streets-relief' zoom='5'>
+      <arcgis-basemap-toggle position='bottom-right'></arcgis-basemap-toggle>
+    </arcgis-map>
+    <script type='module' src='map.js' async></script>
   </body>
 </html>
