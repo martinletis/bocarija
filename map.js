@@ -1,21 +1,19 @@
-const BOCARIJA = {x: 14.3066, y: 45.3366};
-const SYDNEY = {x: 150.644, y: -34.397};
-const VERONA = {x: 10.9917, y: 45.438355};
-
-const routeUrl = 'https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World';
+const BOCARIJA = {longitude: 14.3066, latitude: 45.3366};
+const SYDNEY = {longitude: 150.644, latitude: -34.397};
+const VERONA = {longitude: 10.9917, latitude: 45.438355};
 
 const arcgisMap = document.querySelector('arcgis-map');
-arcgisMap.center = [BOCARIJA.x, BOCARIJA.y];
+arcgisMap.center = BOCARIJA;
 
 const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
 arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
 
-const [Collection, route, RouteParameters, Stop, Graphic] = await $arcgis.import([
+const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import([
   '@arcgis/core/core/Collection.js',
+  '@arcgis/core/Graphic.js',
   '@arcgis/core/rest/route.js',
   '@arcgis/core/rest/support/RouteParameters.js',
   '@arcgis/core/rest/support/Stop.js',
-  '@arcgis/core/Graphic.js',
 ]);
 
 const handleLocation = function(start) {
@@ -31,6 +29,7 @@ const handleLocation = function(start) {
     width: 3
   };
 
+  const routeUrl = 'https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World';
   route.solve(routeUrl, routeParams).then(
     data => {
       data.messages.forEach(message => {
@@ -57,8 +56,8 @@ const handleLocation = function(start) {
           geometry: {
             type: 'polyline',
             paths: [
-              [start.x, start.y],
-              [BOCARIJA.x, BOCARIJA.y],
+              [start.longitude, start.latitude],
+              [BOCARIJA.longitude, BOCARIJA.latitude],
             ],
           },
           symbol: simpleLineSymbol,
@@ -70,7 +69,7 @@ const handleLocation = function(start) {
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
-    position => handleLocation({x: position.coords.longitude, y: position.coords.latitude}),
+    position => handleLocation(position.coords),
     positionError => {
       console.warn(positionError);
       handleLocation(VERONA);
