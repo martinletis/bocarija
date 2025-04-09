@@ -12,7 +12,7 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
 ]);
 
 function handleCoords(coords=VERONA) {
-  console.debug('handleCoords(%O)', start);
+  console.debug('handleCoords(%O)', coords);
 
   console.debug('document.querySelector("arcgis-map")');
   const arcgisMap = document.querySelector('arcgis-map');
@@ -23,7 +23,7 @@ function handleCoords(coords=VERONA) {
 
   const routeParams = new RouteParameters({
     stops: new Collection([
-      new Stop({name: 'Start', geometry: start}),
+      new Stop({name: 'Start', geometry: coords}),
       new Stop({name: 'Bocarija', geometry: BOCARIJA}),
     ]),
   });
@@ -64,7 +64,7 @@ function handleCoords(coords=VERONA) {
           geometry: {
             type: 'polyline',
             paths: [
-              [start.longitude, start.latitude],
+              [coords.longitude, coords.latitude],
               [BOCARIJA.longitude, BOCARIJA.latitude],
             ],
           },
