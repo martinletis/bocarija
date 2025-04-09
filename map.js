@@ -19,8 +19,8 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
   '@arcgis/core/rest/support/Stop.js',
 ]);
 
-const handleLocation = function(start) {
-  console.debug('handleLocation(%O)', start);
+function handleCoords(coords=VERONA) {
+  console.debug('handleCoords(%O)', start);
 
   const routeParams = new RouteParameters({
     stops: new Collection([
@@ -81,12 +81,12 @@ const handleLocation = function(start) {
 if (navigator.geolocation) {
   console.debug('navigator.geolocation.getCurrentPosition()');
   navigator.geolocation.getCurrentPosition(
-    position => handleLocation(position.coords),
+    position => handleCoords(position.coords),
     positionError => {
       console.warn(positionError);
-      handleLocation(VERONA);
+      handleCoords(VERONA);
     });
 } else {
   console.warn('Geolocation not available');
-  handleLocation(VERONA);
+  handleCoords(VERONA);
 }
