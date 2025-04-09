@@ -52,10 +52,12 @@ function handleCoords(coords=VERONA) {
       });
       data.routeResults.forEach(result => {
         result.route.symbol = simpleLineSymbol;
-        console.log('arcgisMap.graphics.add(%O)', result.route);
-        arcgisMap.graphics.add(result.route);      
-        console.log('arcgisMap.goTo(%O)', result.route);
-        arcgisMap.goTo(result.route);
+        arcgisMap.componentOnReady().then(() => {
+          console.log('arcgisMap.graphics.add(%O)', result.route);
+          arcgisMap.graphics.add(result.route);      
+          console.log('arcgisMap.goTo(%O)', result.route);
+          arcgisMap.goTo(result.route);
+        });
       });
     },
     error => {
@@ -70,10 +72,12 @@ function handleCoords(coords=VERONA) {
           },
           symbol: simpleLineSymbol,
         });
-        console.log('arcgisMap.graphics.add(%O)', polylineGraphic);
-        arcgisMap.graphics.add(polylineGraphic);
-        console.log('arcgisMap.goTo(%O)', polylineGraphic);
-        arcgisMap.goTo(polylineGraphic);
+        arcgisMap.componentOnReady().then(() => {
+          console.log('arcgisMap.graphics.add(%O)', polylineGraphic);
+          arcgisMap.graphics.add(polylineGraphic);
+          console.log('arcgisMap.goTo(%O)', polylineGraphic);
+          arcgisMap.goTo(polylineGraphic);
+        });
     });
 };
 
