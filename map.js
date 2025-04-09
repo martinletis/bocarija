@@ -2,13 +2,6 @@ const BOCARIJA = {longitude: 14.3066, latitude: 45.3366};
 const SYDNEY = {longitude: 150.644, latitude: -34.397};
 const VERONA = {longitude: 10.9917, latitude: 45.438355};
 
-console.debug('document.querySelector("arcgis-map")');
-const arcgisMap = document.querySelector('arcgis-map');
-
-console.debug('document.querySelector("arcgis-basemap-toggle")');
-const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
-arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
-
 console.debug('$arcgis.import(...)');
 const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import([
   '@arcgis/core/core/Collection.js',
@@ -20,6 +13,13 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
 
 function handleCoords(coords=VERONA) {
   console.debug('handleCoords(%O)', start);
+
+  console.debug('document.querySelector("arcgis-map")');
+  const arcgisMap = document.querySelector('arcgis-map');
+
+  console.debug('document.querySelector("arcgis-basemap-toggle")');
+  const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
+  arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
 
   const routeParams = new RouteParameters({
     stops: new Collection([
