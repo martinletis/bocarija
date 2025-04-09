@@ -4,7 +4,6 @@ const VERONA = {longitude: 10.9917, latitude: 45.438355};
 
 console.debug('document.querySelector("arcgis-map")');
 const arcgisMap = document.querySelector('arcgis-map');
-arcgisMap.center = BOCARIJA;
 
 console.debug('document.querySelector("arcgis-basemap-toggle")');
 const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
