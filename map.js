@@ -87,9 +87,9 @@ if (navigator.geolocation) {
     position => handleCoords(position.coords),
     positionError => {
       console.warn(positionError);
-      handleCoords(VERONA);
+      handleCoords();
     });
 } else {
   console.warn('Geolocation not available');
-  handleCoords(VERONA);
+  handleCoords();
 }
