@@ -2,12 +2,15 @@ const BOCARIJA = {longitude: 14.3066, latitude: 45.3366};
 const SYDNEY = {longitude: 150.644, latitude: -34.397};
 const VERONA = {longitude: 10.9917, latitude: 45.438355};
 
+console.debug('document.querySelector("arcgis-map")');
 const arcgisMap = document.querySelector('arcgis-map');
 arcgisMap.center = BOCARIJA;
 
+console.debug('document.querySelector("arcgis-basemap-toggle")');
 const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
 arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
 
+console.debug('$arcgis.import(...)');
 const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import([
   '@arcgis/core/core/Collection.js',
   '@arcgis/core/Graphic.js',
@@ -17,6 +20,8 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
 ]);
 
 const handleLocation = function(start) {
+  console.debug('handleLocation(%O)', start);
+
   const routeParams = new RouteParameters({
     stops: new Collection([
       new Stop({name: 'Start', geometry: start}),
@@ -30,6 +35,8 @@ const handleLocation = function(start) {
   };
 
   const routeUrl = 'https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World';
+
+  console.debug('route.solve("%s", %O)', routeUrl, routeParams);
   route.solve(routeUrl, routeParams).then(
     data => {
       data.messages.forEach(message => {
@@ -41,12 +48,14 @@ const handleLocation = function(start) {
             console.error(message.description);
             break;
           default:
-            console.log(message.type + ': ' + message.description);
+            console.log(message);
         }
       });
       data.routeResults.forEach(result => {
         result.route.symbol = simpleLineSymbol;
+        console.log('arcgisMap.graphics.add(%O)', result.route);
         arcgisMap.graphics.add(result.route);      
+        console.log('arcgisMap.goTo(%O)', result.route);
         arcgisMap.goTo(result.route);
       });
     },
@@ -61,13 +70,16 @@ const handleLocation = function(start) {
             ],
           },
           symbol: simpleLineSymbol,
-       });
-       arcgisMap.graphics.add(polylineGraphic);
-       arcgisMap.goTo(polylineGraphic);
+        });
+        console.log('arcgisMap.graphics.add(%O)', polylineGraphic);
+        arcgisMap.graphics.add(polylineGraphic);
+        console.log('arcgisMap.goTo(%O)', polylineGraphic);
+        arcgisMap.goTo(polylineGraphic);
     });
 };
 
 if (navigator.geolocation) {
+  console.debug('navigator.geolocation.getCurrentPosition()');
   navigator.geolocation.getCurrentPosition(
     position => handleLocation(position.coords),
     positionError => {
@@ -75,5 +87,6 @@ if (navigator.geolocation) {
       handleLocation(VERONA);
     });
 } else {
+  console.warn('Geolocation not available');
   handleLocation(VERONA);
 }
