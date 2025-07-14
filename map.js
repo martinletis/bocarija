@@ -11,7 +11,7 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
   '@arcgis/core/rest/support/Stop.js',
 ]);
 
-function handleCoords(coords=VERONA) {
+function handleCoords(arcgisMap, coords=VERONA) {
   console.debug('handleCoords(%O)', coords);
 
   console.debug('document.querySelector("arcgis-basemap-toggle")');
