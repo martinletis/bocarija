@@ -14,9 +14,6 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
 function handleCoords(coords=VERONA) {
   console.debug('handleCoords(%O)', coords);
 
-  console.debug('document.querySelector("arcgis-map")');
-  const arcgisMap = document.querySelector('arcgis-map');
-
   console.debug('document.querySelector("arcgis-basemap-toggle")');
   const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
   arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
@@ -81,15 +78,19 @@ function handleCoords(coords=VERONA) {
     });
 };
 
+console.debug('document.querySelector("arcgis-map")');
+const arcgisMap = document.querySelector('arcgis-map');
+await arcgisMap.viewOnReady();
+
 if (navigator.geolocation) {
   console.debug('navigator.geolocation.getCurrentPosition()');
   navigator.geolocation.getCurrentPosition(
-    position => handleCoords(position.coords),
+    position => handleCoords(arcgisMap, position.coords),
     positionError => {
       console.warn(positionError);
-      handleCoords();
+      handleCoords(arcgisMap);
     });
 } else {
   console.warn('Geolocation not available');
-  handleCoords();
+  handleCoords(arcgisMap);
 }
