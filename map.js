@@ -14,10 +14,6 @@ const [Collection, Graphic, route, RouteParameters, Stop] = await $arcgis.import
 function handleCoords(arcgisMap, coords=VERONA) {
   console.debug('handleCoords(%O)', coords);
 
-  console.debug('document.querySelector("arcgis-basemap-toggle")');
-  const arcgisBasemapToggle = document.querySelector('arcgis-basemap-toggle');
-  arcgisBasemapToggle.nextBasemap = 'arcgis/navigation'
-
   const routeParams = new RouteParameters({
     stops: new Collection([
       new Stop({name: 'Start', geometry: coords}),
