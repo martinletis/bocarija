@@ -33,19 +33,18 @@
     </script>
 
     <!-- Load Calcite -->
-    <script type='module' src='https://js.arcgis.com/calcite-components/3.2.1/calcite.esm.js'></script>
+    <script type="module" src="https://js.arcgis.com/calcite-components/3.3.3/calcite.esm.js"></script>
 
     <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
-    <link rel='stylesheet' href='https://js.arcgis.com/4.33/esri/themes/light/main.css'>
-    <script src='https://js.arcgis.com/4.33/'></script>
+    <script src='https://js.arcgis.com/4.34/'></script>
 
     <!-- Load map components -->
-    <script type='module' src='https://js.arcgis.com/4.33/map-components'></script>
+    <script type='module' src='https://js.arcgis.com/4.34/map-components'></script>
 
   </head>
   <body>
     <arcgis-map basemap='arcgis/streets-relief' center='14.3066, 45.3366' zoom='5'>
-      <arcgis-basemap-toggle position='bottom-right' next-basemap='arcgis/navigation'></arcgis-basemap-toggle>
+      <arcgis-basemap-toggle slot='top-right' next-basemap='arcgis/navigation'></arcgis-basemap-toggle>
     </arcgis-map>
     <script type='module' src='map.js' async></script>
   </body>
