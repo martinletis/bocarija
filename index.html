@@ -18,10 +18,8 @@
       html,
       body,
       arcgis-map {
-        padding: 0;
         margin: 0;
         height: 100%;
-        width: 100%;
       }
     </style>
 
@@ -32,20 +30,13 @@
       };
     </script>
 
-    <!-- Load Calcite -->
-    <script type="module" src="https://js.arcgis.com/calcite-components/3.3.3/calcite.esm.js"></script>
-
-    <!-- Load the ArcGIS Maps SDK for JavaScript core API -->
-    <script src='https://js.arcgis.com/4.34/'></script>
-
-    <!-- Load map components -->
-    <script type='module' src='https://js.arcgis.com/4.34/map-components'></script>
-
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type='module' src='https://js.arcgis.com/5.0/'></script>
   </head>
   <body>
     <arcgis-map basemap='arcgis/streets-relief' center='14.3066, 45.3366' zoom='5'>
       <arcgis-basemap-toggle slot='top-right' next-basemap='arcgis/navigation'></arcgis-basemap-toggle>
     </arcgis-map>
-    <script type='module' src='map.js' async></script>
+    <script type='module' src='map.js'></script>
   </body>
 </html>
